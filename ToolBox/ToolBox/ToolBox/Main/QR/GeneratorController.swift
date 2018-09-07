@@ -83,6 +83,10 @@ class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDele
     var pointShape: EFPointShape = .square
     var watermark: EFImage? = nil
     var watermarkFilterValue: CGFloat = 30.0
+    //默认图
+    var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/qq","TB.bundle/function/QR/taobao","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/wechat"]
+    //默认图名字
+    var defaultWatermarkDesName:[String] = ["京东", "天猫", "淘宝", "微信", "QQ"]
 
     // MARK:- Not commonly used
     var foregroundPointOffset: CGFloat = 0
@@ -150,7 +154,7 @@ extension GeneratorController {
         textView.snp.makeConstraints {
             (make) in
             make.left.equalTo(10)
-            make.top.equalTo(CGFloat.statusBar() + CGFloat.navigationBar(self) + 15)
+            make.top.equalTo(self.view).offset(15)
             make.width.equalTo(self.view).offset(-20)
             make.height.equalTo(self.view).dividedBy(3.0)
         }
@@ -634,12 +638,12 @@ extension GeneratorController {
 
     func chooseWatermark() {
         let alert = UIAlertController(
-            title: "Watermark",
+            title: "背景图",
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: "取消", style: .cancel, handler: nil)
         )
         alert.addAction(
             UIAlertAction(title: "nil", style: .default, handler: {
@@ -652,16 +656,16 @@ extension GeneratorController {
         )
         #if os(iOS)
             alert.addAction(
-                UIAlertAction(title: "Select from system album", style: .default, handler: {
+                UIAlertAction(title: "相册", style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
-                        strongSelf.chooseImageFromAlbum(title: "watermark")
+                        strongSelf.chooseImageFromAlbum(title: "背景图")
                         strongSelf.refresh()
                     }
                 })
             )
         #endif
-        for watermark in ["Beethoven", "Jobs", "Miku", "Wille", "WWF"] {
+        for watermark in ["京东", "天猫", "淘宝", "微信", "QQ"] {
             alert.addAction(
                 UIAlertAction(title: watermark, style: .default, handler: {
                     [weak self] (action) -> Void in
@@ -1088,9 +1092,16 @@ extension GeneratorController {
                 //对地图进行模糊处理
                 if let filterImage:UIImage = TLImageHelper.filterImage(finalImage, value: self.watermarkFilterValue){
                     self.watermark = EFImage(filterImage)
+                    //调整大小
+//                    if let changeSizeImage:UIImage = TLImageHelper.imageResize(filterImage, andResizeTo: CGSize(width: self.size.width, height: self.size.height)){
+//                        self.watermark = EFImage(changeSizeImage)
+//                    }else{
+//                        self.watermark = EFImage(finalImage)
+//                    }
                 }else{
                     self.watermark = EFImage(finalImage)
                 }
+
                 var images = [EFImage]()
                 if let imageUrl = info[UIImagePickerControllerReferenceURL] as? URL {
                     if let asset = PHAsset.fetchAssets(withALAssetURLs: [imageUrl], options: nil).lastObject {
@@ -1173,7 +1184,7 @@ extension GeneratorController {
                 let picker = UIImagePickerController()
                 picker.sourceType = .photoLibrary
                 picker.delegate = self
-                picker.allowsEditing = true
+                picker.allowsEditing = false
                 imagePicker = picker
 
                 self.present(picker, animated: true, completion: nil)

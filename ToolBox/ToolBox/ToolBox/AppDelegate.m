@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "TLBaseNavigationController.h"
 @interface AppDelegate ()
 
 @end
@@ -17,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     ViewController *viewCon = [[ViewController alloc] init];
-    UINavigationController *rootVC = [[UINavigationController alloc] initWithRootViewController:viewCon];
+    TLBaseNavigationController *rootVC = [[TLBaseNavigationController alloc] initWithRootViewController:viewCon];
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
     return YES;

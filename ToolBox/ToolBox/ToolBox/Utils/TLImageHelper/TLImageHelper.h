@@ -40,4 +40,13 @@
  @return 返回合成后的二维码
  */
 + (UIImage *)insertLogoInQrCodeImage:(UIImage *)qrCodeImage logoImage:(UIImage *)logoImage;
+
+/**
+ 调整UIImage的大小
+
+ @param img  原UIImage
+ @param newSize 要调整的大小
+ @return 调整后的大小
+ */
++(UIImage *)imageResize:(UIImage*)img andResizeTo:(CGSize)newSize;
 @end
