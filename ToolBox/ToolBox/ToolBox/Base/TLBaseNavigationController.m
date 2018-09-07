@@ -181,8 +181,8 @@
 - (TLBaseBarButtonItem *)createBackButton
 {
     TLBaseBarButtonItem *backItem =
-    [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_black"]
-                          selectedImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_black"]
+    [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_black"]
+                          selectedImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_black"]
                                  target:self
                                  action:@selector(navBackItemClick) leftItem:YES];
     return backItem;

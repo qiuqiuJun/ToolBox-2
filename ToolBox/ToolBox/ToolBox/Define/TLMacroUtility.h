@@ -34,7 +34,7 @@ Stuff; \
 _Pragma("clang diagnostic pop") \
 } while (0)
 
-#define GetDevTongXieBundleRes(imageName) [NSString stringWithFormat:@"DYGameCenter.bundle/function/IM/%@", imageName]
+#define GetDevTongXieBundleRes(imageName) [NSString stringWithFormat:@"TB.bundle/function/IM/%@", imageName]
 
 //以上是从DevMacroUtility中挪移过来的
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

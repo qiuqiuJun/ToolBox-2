@@ -59,7 +59,7 @@
     [self.navigationController.navigationBar setBarTintColor:DYNavColor];
 }
 - (void)customNavWhiteBack{
-    TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_black"] selectedImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_black"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
+    TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_black"] selectedImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_black"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
     self.navigationItem.leftBarButtonItem = leftBarBtn;
 }
 - (void)customNavRed{
@@ -71,7 +71,7 @@
     [self customNavBlackBack];
 }
 - (void)customNavBlackBack{
-    TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_white"] selectedImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_white"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
+    TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_white"] selectedImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_white"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
     self.navigationItem.leftBarButtonItem = leftBarBtn;
 }
 // 设置返回按钮-这里只有视图控制器的第一个才会使用该方法设置
@@ -79,7 +79,7 @@
 {
     if (nil == self.navigationItem.leftBarButtonItem)
     {
-        TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_white.png"] selectedImage:[UIImage imageNamed:@"DYGameCenter.bundle/nav/navBack_white.png"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
+        TLBaseBarButtonItem *leftBarBtn = [TLBaseBarButtonItem barItemWithImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_white.png"] selectedImage:[UIImage imageNamed:@"TB.bundle/nav/navBack_white.png"] target:self action:@selector(navBarLeftItemClick) leftItem:YES];
         self.navigationItem.leftBarButtonItem = leftBarBtn;
     }
 }
