@@ -68,6 +68,7 @@
 		54728B03214251FB007668E8 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54728AD1214251FB007668E8 /* UIImage+.swift */; };
 		54728B0721425698007668E8 /* TLImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728B0621425698007668E8 /* TLImageHelper.m */; };
 		54728B09214257DD007668E8 /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 54728B08214257DD007668E8 /* appicon.png */; };
+		54728B0B2142957D007668E8 /* TB.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 54728B0A2142957D007668E8 /* TB.bundle */; };
 		54F4FE5221420956002D884C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5121420956002D884C /* AppDelegate.m */; };
 		54F4FE5521420956002D884C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5421420956002D884C /* ViewController.m */; };
 		54F4FE5821420956002D884C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54F4FE5621420956002D884C /* Main.storyboard */; };
@@ -161,6 +162,7 @@
 		54728B0521425698007668E8 /* TLImageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLImageHelper.h; sourceTree = "<group>"; };
 		54728B0621425698007668E8 /* TLImageHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TLImageHelper.m; sourceTree = "<group>"; };
 		54728B08214257DD007668E8 /* appicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appicon.png; sourceTree = "<group>"; };
+		54728B0A2142957D007668E8 /* TB.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TB.bundle; path = Resource/TB.bundle; sourceTree = "<group>"; };
 		54F4FE4D21420956002D884C /* ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToolBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54F4FE5021420956002D884C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		54F4FE5121420956002D884C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 		54F4FE4F21420956002D884C /* ToolBox */ = {
 			isa = PBXGroup;
 			children = (
+				54728B0A2142957D007668E8 /* TB.bundle */,
 				54728A9B21425187007668E8 /* Main */,
 				54728A77214212CF007668E8 /* Base */,
 				54728A73214212CF007668E8 /* Define */,
@@ -444,6 +447,7 @@
 				54F4FE5D21420959002D884C /* LaunchScreen.storyboard in Resources */,
 				54F4FE5A21420959002D884C /* Assets.xcassets in Resources */,
 				54F4FE5821420956002D884C /* Main.storyboard in Resources */,
+				54728B0B2142957D007668E8 /* TB.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
