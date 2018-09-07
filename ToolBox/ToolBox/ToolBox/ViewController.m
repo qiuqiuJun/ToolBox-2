@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-
+#import "ToolBox-Swift.h"
+#import "TLImageHelper.h"
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong ,nonatomic) NSMutableArray *itemArr;
 @property (strong ,nonatomic) UITableView *myTab;
@@ -27,6 +28,18 @@
     [self.myTab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.equalTo(weakSelf.view);
     }];
+    
+//    UIImageView *imagevie = [[UIImageView alloc] init];
+//    imagevie.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:imagevie];
+//    [imagevie mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(weakSelf.view);
+//        make.centerY.equalTo(weakSelf.view);
+//        make.width.mas_equalTo(70);
+//        make.height.mas_equalTo(70);
+//    }];
+//    UIImage *image = [TLImageHelper filterImage:[UIImage imageNamed:@"appicon"] value:50.0];
+//    imagevie.image = image;
 }
 #pragma -mark -lazy
 - (UITableView *)myTab{
@@ -42,8 +55,8 @@
 - (NSMutableArray *)itemArr{//
     if (nil ==  _itemArr) {
         _itemArr = [[NSMutableArray alloc] initWithObjects:
-                    @{@"title":@"二维码扫描",@"className":@"FactoryVC"},
-                    @{@"title":@"二维码DIY",@"className":@"TestConstVC"},
+                    @{@"title":@"二维码扫描",@"className":@"RecognizerController"},
+                    @{@"title":@"二维码DIY",@"className":@"GeneratorController"},
                     @{@"title":@"手电筒",@"className":@"WkJsVC"},
                     @{@"title":@"放大镜",@"className":@"ChangeAppIconVC"},
                     @{@"title":@"分贝记",@"className":@"CopyAndMutableCopyVC"},
@@ -82,7 +95,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *dic = (NSDictionary *)[self.itemArr objectAtIndex:indexPath.row];
     NSString *className = dic[@"className"];
-    UIViewController *con = [(UIViewController *)[NSClassFromString(className) alloc] init];
+    UIViewController *con;
+    if ([className isEqualToString:@"RecognizerController"]) {
+        con = [[RecognizerController alloc] init];
+    }else if ([className isEqualToString:@"GeneratorController"]){
+        con = [[GeneratorController alloc] init];
+    }else{
+       con = [(UIViewController *)[NSClassFromString(className) alloc] init];
+    }
     [self.navigationController pushViewController:con animated:YES];
 }
 @end
