@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		36FACF692DC8B68F7F71ED65 /* libPods-ToolBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C6045B5E32A263D1C02A11 /* libPods-ToolBox.a */; };
+		540D8FC52142B4500060D5C9 /* TBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 540D8FC42142B4500060D5C9 /* TBSegmentedControl.m */; };
+		540D8FC82142C0FC0060D5C9 /* TBSwiftDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540D8FC72142C0FC0060D5C9 /* TBSwiftDefine.swift */; };
 		54728A7F214212D0007668E8 /* TLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728A78214212CF007668E8 /* TLBaseViewController.m */; };
 		54728A80214212D0007668E8 /* TLBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728A79214212CF007668E8 /* TLBaseNavigationController.m */; };
 		54728A81214212D0007668E8 /* TLBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728A7B214212CF007668E8 /* TLBaseTableViewCell.m */; };
@@ -93,6 +95,9 @@
 
 /* Begin PBXFileReference section */
 		27C6045B5E32A263D1C02A11 /* libPods-ToolBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ToolBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		540D8FC42142B4500060D5C9 /* TBSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSegmentedControl.m; sourceTree = "<group>"; };
+		540D8FC62142B4860060D5C9 /* TBSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBSegmentedControl.h; sourceTree = "<group>"; };
+		540D8FC72142C0FC0060D5C9 /* TBSwiftDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBSwiftDefine.swift; sourceTree = "<group>"; };
 		54728A78214212CF007668E8 /* TLBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLBaseViewController.m; sourceTree = "<group>"; };
 		54728A79214212CF007668E8 /* TLBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLBaseNavigationController.m; sourceTree = "<group>"; };
 		54728A7A214212CF007668E8 /* TLBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLBaseTableViewCell.h; sourceTree = "<group>"; };
@@ -198,9 +203,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		540D8FC22142B4500060D5C9 /* TBSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				540D8FC62142B4860060D5C9 /* TBSegmentedControl.h */,
+				540D8FC42142B4500060D5C9 /* TBSegmentedControl.m */,
+			);
+			path = TBSegmentedControl;
+			sourceTree = "<group>";
+		};
 		54728A73214212CF007668E8 /* Define */ = {
 			isa = PBXGroup;
 			children = (
+				540D8FC72142C0FC0060D5C9 /* TBSwiftDefine.swift */,
 				54728A8521421379007668E8 /* TLThemeDefine.h */,
 				54728A862142137A007668E8 /* TLMacroUtility.h */,
 			);
@@ -210,6 +225,7 @@
 		54728A74214212CF007668E8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				540D8FC22142B4500060D5C9 /* TBSegmentedControl */,
 				54728B042142566C007668E8 /* TLImageHelper */,
 				54728A8721421404007668E8 /* DYStringKit */,
 			);
@@ -496,6 +512,7 @@
 				54728ADD214251FB007668E8 /* ConstraintDSL.swift in Sources */,
 				54728AD3214251FB007668E8 /* GeneratorController.swift in Sources */,
 				54728AF8214251FB007668E8 /* EFHSBView.swift in Sources */,
+				540D8FC52142B4500060D5C9 /* TBSegmentedControl.m in Sources */,
 				54728AEA214251FB007668E8 /* ConstraintMaker.swift in Sources */,
 				54728AF4214251FB007668E8 /* ConstraintLayoutSupportDSL.swift in Sources */,
 				54728AEF214251FB007668E8 /* Constraint.swift in Sources */,
@@ -507,6 +524,7 @@
 				54728AF1214251FB007668E8 /* ConstraintRelatableTarget.swift in Sources */,
 				54728AD6214251FB007668E8 /* ConstraintDescription.swift in Sources */,
 				54728ADE214251FB007668E8 /* ConstraintMakerExtendable.swift in Sources */,
+				540D8FC82142C0FC0060D5C9 /* TBSwiftDefine.swift in Sources */,
 				54728A9721422F57007668E8 /* ViewController2.swift in Sources */,
 				54728AEC214251FB007668E8 /* ConstraintLayoutGuideDSL.swift in Sources */,
 				54728AE0214251FB007668E8 /* ConstraintInsetTarget.swift in Sources */,
