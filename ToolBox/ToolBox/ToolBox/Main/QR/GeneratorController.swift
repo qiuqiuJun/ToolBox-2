@@ -76,7 +76,7 @@ class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDele
     var backColor = UIColor.white
     var frontColor = UIColor.black
     var icon: UIImage? = nil
-    var iconSize: EFIntSize? = EFIntSize(width: 50,height: 50)
+    var iconSize: EFIntSize? = EFIntSize(width: 80,height: 80)
     var watermarkMode = EFWatermarkMode.scaleAspectFill
     var mode: EFQRCodeMode = .none
     var binarizationThreshold: CGFloat = 0.5
@@ -84,7 +84,7 @@ class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDele
     var watermark: EFImage? = nil
     var watermarkFilterValue: CGFloat = 30.0
     //默认图
-    var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/taobao","TB.bundle/function/QR/qq","TB.bundle/function/QR/wechat"]
+    var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/taobao","TB.bundle/function/QR/wechat","TB.bundle/function/QR/qq"]
     //默认图名字
     var defaultWatermarkDesName:[String] = ["京东", "天猫", "淘宝", "微信", "QQ"]
 
@@ -470,34 +470,34 @@ extension GeneratorController {
                 })
             )
         #endif
-        if let tryWaterMark = watermark?.data as? UIImage {
-            alert.addAction(
-                UIAlertAction(title: "Average of watermark", style: .default, handler: {
-                    [weak self] (action) -> Void in
-                    if let strongSelf = self {
-                        strongSelf.frontColor = tryWaterMark.avarageColor() ?? UIColor.black
-                        strongSelf.refresh()
-                    }
-                })
-            )
-            alert.addAction(
-                UIAlertAction(title: "Average of watermark (Dacker)", style: .default, handler: {
-                    [weak self] (action) -> Void in
-                    if let strongSelf = self {
-                        var xxxColor = tryWaterMark.avarageColor() ?? UIColor.black
-                        if let coms = xxxColor.cgColor.components {
-                            let r = (CGFloat(coms[0]) + 0) / 2.0
-                            let g = (CGFloat(coms[1]) + 0) / 2.0
-                            let b = (CGFloat(coms[2]) + 0) / 2.0
-                            let a = (CGFloat(coms[3]) + 1) / 2.0
-                            xxxColor = UIColor(red: r, green: g, blue: b, alpha: a)
-                        }
-                        strongSelf.frontColor = xxxColor
-                        strongSelf.refresh()
-                    }
-                })
-            )
-        }
+//        if let tryWaterMark = watermark?.data as? UIImage {
+//            alert.addAction(
+//                UIAlertAction(title: "Average of watermark", style: .default, handler: {
+//                    [weak self] (action) -> Void in
+//                    if let strongSelf = self {
+//                        strongSelf.frontColor = tryWaterMark.avarageColor() ?? UIColor.black
+//                        strongSelf.refresh()
+//                    }
+//                })
+//            )
+//            alert.addAction(
+//                UIAlertAction(title: "Average of watermark (Dacker)", style: .default, handler: {
+//                    [weak self] (action) -> Void in
+//                    if let strongSelf = self {
+//                        var xxxColor = tryWaterMark.avarageColor() ?? UIColor.black
+//                        if let coms = xxxColor.cgColor.components {
+//                            let r = (CGFloat(coms[0]) + 0) / 2.0
+//                            let g = (CGFloat(coms[1]) + 0) / 2.0
+//                            let b = (CGFloat(coms[2]) + 0) / 2.0
+//                            let a = (CGFloat(coms[3]) + 1) / 2.0
+//                            xxxColor = UIColor(red: r, green: g, blue: b, alpha: a)
+//                        }
+//                        strongSelf.frontColor = xxxColor
+//                        strongSelf.refresh()
+//                    }
+//                })
+//            )
+//        }
         for color in colorList {
             alert.addAction(
                 UIAlertAction(title: color.name, style: .default, handler: {
@@ -661,7 +661,7 @@ extension GeneratorController {
                 UIAlertAction(title: "相册", style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
-                        strongSelf.chooseImageFromAlbum(title: "背景图")
+                        strongSelf.chooseImageFromAlbum(title: "watermark")
                         strongSelf.refresh()
                     }
                 })
