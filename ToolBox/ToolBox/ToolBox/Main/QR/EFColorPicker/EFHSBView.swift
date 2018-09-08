@@ -87,16 +87,32 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
         colorSample.layer.borderWidth = 0.5
         colorSample.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorSample)
-
+        colorSample.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(EFColorSampleViewHeight)
+            make.right.equalTo(self).offset(-EFColorSampleViewHeight)
+            make.top.equalTo(self).offset(StatusBarHeight() + 100)
+            make.height.equalTo(100)
+        }
         colorWheel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorWheel)
-
+        colorWheel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+            make.top.equalTo(colorSample.snp.bottom).offset(100)
+        }
+        
         brightnessView.title = NSLocalizedString("Brightness", comment: "")
         brightnessView.maximumValue = EFHSBColorComponentMaxValue
         brightnessView.format = "%.2f"
         brightnessView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(brightnessView)
+        brightnessView.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(15)
+            make.right.equalTo(self).offset(-15)
 
+            make.top.equalTo(colorWheel.snp.bottom).offset(30)
+        }
         colorWheel.addTarget(
             self, action: #selector(ef_colorDidChangeValue(sender:)), for: UIControlEvents.valueChanged
         )
@@ -104,7 +120,7 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
             self, action: #selector(ef_brightnessDidChangeValue(sender:)), for: UIControlEvents.valueChanged
         )
 
-        self.setNeedsUpdateConstraints()
+//        self.setNeedsUpdateConstraints()
     }
 
     private func ef_updateConstraints() {

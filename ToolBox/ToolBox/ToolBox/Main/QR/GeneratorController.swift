@@ -76,7 +76,7 @@ class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDele
     var backColor = UIColor.white
     var frontColor = UIColor.black
     var icon: UIImage? = nil
-    var iconSize: EFIntSize? = EFIntSize(width: 20,height: 20)
+    var iconSize: EFIntSize? = EFIntSize(width: 50,height: 50)
     var watermarkMode = EFWatermarkMode.scaleAspectFill
     var mode: EFQRCodeMode = .none
     var binarizationThreshold: CGFloat = 0.5
@@ -84,7 +84,7 @@ class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDele
     var watermark: EFImage? = nil
     var watermarkFilterValue: CGFloat = 30.0
     //默认图
-    var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/qq","TB.bundle/function/QR/taobao","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/wechat"]
+    var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/taobao","TB.bundle/function/QR/qq","TB.bundle/function/QR/wechat"]
     //默认图名字
     var defaultWatermarkDesName:[String] = ["京东", "天猫", "淘宝", "微信", "QQ"]
 
@@ -297,7 +297,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //设置二维码的尺寸
     func chooseSize() {
         let alert = UIAlertController(
             title: "Size", message: nil, preferredStyle: .alert
@@ -334,7 +334,7 @@ extension GeneratorController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(alert, animated: true, completion: nil)
     }
-
+    //设置方法的倍数，倍数越高，放大后显示的就越清晰
     func chooseMagnification() {
         func customInput() {
             let alert = UIAlertController(
@@ -413,15 +413,15 @@ extension GeneratorController {
         )
         popActionSheet(alert: alert)
     }
-
+    //设置背景颜色
     func chooseBackColor() {
         let alert = UIAlertController(
-            title: "BackColor",
+            title: nil,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            UIAlertAction(title: "取消", style: .cancel, handler: {
                 (action) -> Void in
             })
         )
@@ -448,21 +448,21 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //设置前置颜色
     func chooseFrontColor() {
         let alert = UIAlertController(
-            title: "FrontColor",
+            title: nil,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            UIAlertAction(title: "取消", style: .cancel, handler: {
                 (action) -> Void in
             })
         )
         #if os(iOS)
             alert.addAction(
-                UIAlertAction(title: "Custom", style: .default, handler: {
+                UIAlertAction(title: "自定义", style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
                         strongSelf.customColor(1)
@@ -511,20 +511,20 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //选择logo
     func chooseIcon() {
         let alert = UIAlertController(
-            title: "Icon",
+            title: nil,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            UIAlertAction(title: "取消", style: .cancel, handler: {
                 (action) -> Void in
             })
         )
         alert.addAction(
-            UIAlertAction(title: "nil", style: .default, handler: {
+            UIAlertAction(title: "无需Logo", style: .default, handler: {
                 [weak self] (action) -> Void in
                 if let strongSelf = self {
                     strongSelf.icon = nil
@@ -534,7 +534,7 @@ extension GeneratorController {
         )
         #if os(iOS)
             alert.addAction(
-                UIAlertAction(title: "Select from system album", style: .default, handler: {
+                UIAlertAction(title: "从相册选择", style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
                         strongSelf.chooseImageFromAlbum(title: "icon")
@@ -543,12 +543,14 @@ extension GeneratorController {
                 })
             )
         #endif
-        for icon in ["EyreFree", "GitHub", "LPD", "Pikachu", "Swift"] {
+        for (index,icon) in self.defaultWatermarkDesName.enumerated() {
             alert.addAction(
                 UIAlertAction(title: icon, style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
-                        strongSelf.icon = UIImage(named: icon)
+//                        strongSelf.icon = UIImage(named: icon)
+                        strongSelf.icon = UIImage(named: (self?.defaultWatermarkIconName[index])!)
+
                         strongSelf.refresh()
                     }
                 })
@@ -556,7 +558,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //设置logo的大小
     func chooseIconSize() {
         func customInput() {
             let alert = UIAlertController(
@@ -603,7 +605,7 @@ extension GeneratorController {
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            UIAlertAction(title: "取消", style: .cancel, handler: {
                 (action) -> Void in
             })
         )
@@ -626,7 +628,7 @@ extension GeneratorController {
             })
         )
         alert.addAction(
-            UIAlertAction(title: "custom", style: .default, handler: {
+            UIAlertAction(title: "自定义", style: .default, handler: {
                 [weak self] (action) -> Void in
                 if let _ = self {
                     customInput()
@@ -635,10 +637,10 @@ extension GeneratorController {
         )
         popActionSheet(alert: alert)
     }
-
+    //选择水印背景图
     func chooseWatermark() {
         let alert = UIAlertController(
-            title: "背景图",
+            title: nil,
             message: nil,
             preferredStyle: .actionSheet
         )
@@ -646,7 +648,7 @@ extension GeneratorController {
             UIAlertAction(title: "取消", style: .cancel, handler: nil)
         )
         alert.addAction(
-            UIAlertAction(title: "nil", style: .default, handler: {
+            UIAlertAction(title: "无需背景", style: .default, handler: {
                 [weak self] (action) -> Void in
                 if let strongSelf = self {
                     strongSelf.watermark = nil
@@ -665,12 +667,26 @@ extension GeneratorController {
                 })
             )
         #endif
-        for watermark in ["京东", "天猫", "淘宝", "微信", "QQ"] {
+//        for watermark in ["京东", "天猫", "淘宝", "微信", "QQ"] {
+//            alert.addAction(
+//                UIAlertAction(title: watermark, style: .default, handler: {
+//                    [weak self] (action) -> Void in
+//                    if let strongSelf = self {
+//                        strongSelf.watermark = EFImage(UIImage(named: watermark))
+//                        strongSelf.refresh()
+//                    }
+//                })
+//            )
+//        }
+        for (index,watermark) in self.defaultWatermarkDesName.enumerated() {
             alert.addAction(
                 UIAlertAction(title: watermark, style: .default, handler: {
                     [weak self] (action) -> Void in
                     if let strongSelf = self {
-                        strongSelf.watermark = EFImage(UIImage(named: watermark))
+                        //                        strongSelf.icon = UIImage(named: icon)
+//                        strongSelf.watermark = UIImage(named: (self?.defaultWatermarkIconName[index])!)
+                        strongSelf.watermark = EFImage(UIImage(named: (self?.defaultWatermarkIconName[index])!))
+                        
                         strongSelf.refresh()
                     }
                 })
@@ -678,7 +694,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //设置水印背景的显示方式
     func chooseWatermarkMode() {
         let alert = UIAlertController(
             title: "WatermarkMode",
@@ -712,7 +728,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //暂时没用到
     func chooseForegroundPointOffset() {
         let alert = UIAlertController(
             title: "ForegroundPointOffset",
@@ -746,7 +762,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //暂时没用到
     func chooseBinarizationThreshold() {
         let alert = UIAlertController(
             title: "binarizationThreshold",
@@ -771,7 +787,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //暂时没用到
     func chooseMode() {
         let alert = UIAlertController(
             title: "mode",
@@ -802,21 +818,21 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //设置二维码点的形状
     func chooseShape() {
         let alert = UIAlertController(
-            title: "pointShape",
+            title: nil,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            UIAlertAction(title: "取消", style: .cancel, handler: {
                 (action) -> Void in
             })
         )
 
         let shapeNameArray = [
-            "square", "circle"
+            "方块", "圆点"
         ]
         for (index, shapeName) in shapeNameArray.enumerated() {
             alert.addAction(
@@ -833,7 +849,7 @@ extension GeneratorController {
         }
         popActionSheet(alert: alert)
     }
-
+    //暂时没用到
     func popActionSheet(alert: UIAlertController) {
         //阻止 iPad Crash
         alert.popoverPresentationController?.sourceView = self.view
@@ -844,7 +860,7 @@ extension GeneratorController {
         )
         self.present(alert, animated: true, completion: nil)
     }
-
+    //暂时没用到
     func chooseAllowTransparent() {
         let alert = UIAlertController(
             title: "AllowTransparent",
@@ -916,11 +932,12 @@ extension GeneratorController {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //设置选项
         let titleArray = [
             "二维码尺寸",
             "背景色",
             "前景色",
-            "logo",
+            "Logo",
 //            "logo尺寸",
             "二维码背景图",
             "二维码形状"
@@ -933,6 +950,7 @@ extension GeneratorController {
 //            "left", "right", "topLeft", "topRight", "bottomLeft", "bottomRight"
 //            ][watermarkMode.rawValue]
 //        let watermarkModeString = "scaleAspectFit"
+        //设置选项详情
         let detailArray = [
             "\(size.width)x\(size.height)",
             "", // backgroundColor
@@ -1024,9 +1042,9 @@ extension GeneratorController {
             EFColorPicker.isFront = isFront == 1
 
             let colorSelectionController = EFColorSelectionViewController()
-            let navCtrl = UINavigationController(rootViewController: colorSelectionController)
-            navCtrl.navigationBar.backgroundColor = UIColor.white
-            navCtrl.navigationBar.isTranslucent = false
+            let navCtrl = TLBaseNavigationController(rootViewController: colorSelectionController)
+//            navCtrl.navigationBar.backgroundColor = UIColor.white
+//            navCtrl.navigationBar.isTranslucent = false
             navCtrl.modalPresentationStyle = UIModalPresentationStyle.popover
             navCtrl.popoverPresentationController?.delegate = self
             navCtrl.popoverPresentationController?.sourceView = tableView
@@ -1039,15 +1057,15 @@ extension GeneratorController {
             colorSelectionController.delegate = self
             colorSelectionController.color = EFColorPicker.isFront ?  self.frontColor : self.backColor
 
-            if UIUserInterfaceSizeClass.compact == self.traitCollection.horizontalSizeClass {
-                let doneBtn: UIBarButtonItem = UIBarButtonItem(
-                    title: NSLocalizedString("Done", comment: ""),
-                    style: UIBarButtonItemStyle.done,
-                    target: self,
-                    action: #selector(ef_dismissViewController(sender:))
-                )
-                colorSelectionController.navigationItem.rightBarButtonItem = doneBtn
-            }
+//            if UIUserInterfaceSizeClass.compact == self.traitCollection.horizontalSizeClass {
+//                let doneBtn: UIBarButtonItem = UIBarButtonItem(
+//                    title: NSLocalizedString("Done", comment: ""),
+//                    style: UIBarButtonItemStyle.done,
+//                    target: self,
+//                    action: #selector(ef_dismissViewController(sender:))
+//                )
+//                colorSelectionController.navigationItem.rightBarButtonItem = doneBtn
+//            }
             self.present(navCtrl, animated: true, completion: nil)
         }
 

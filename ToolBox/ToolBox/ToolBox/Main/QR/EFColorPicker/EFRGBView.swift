@@ -79,7 +79,12 @@ public class EFRGBView: UIView, EFColorView {
         colorSample.layer.borderWidth = 0.5
         colorSample.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorSample)
-
+        colorSample.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(EFColorSampleViewHeight)
+            make.right.equalTo(self).offset(-EFColorSampleViewHeight)
+            make.top.equalTo(self).offset(StatusBarHeight() + 100)
+            make.height.equalTo(100)
+        }
         var tmp: [EFColorComponentView] = []
         let titles = [
             NSLocalizedString("Red", comment: ""),
@@ -89,11 +94,18 @@ public class EFRGBView: UIView, EFColorView {
         let maxValues: [CGFloat] = [
             EFRGBColorComponentMaxValue, EFRGBColorComponentMaxValue, EFRGBColorComponentMaxValue
         ]
+
         for i in 0 ..< EFRGBColorComponentsSize {
             let colorComponentView = self.ef_colorComponentViewWithTitle(
                 title: titles[i], tag: i, maxValue: maxValues[i]
             )
             self.addSubview(colorComponentView)
+            colorComponentView.snp.makeConstraints { (make) in
+                make.left.equalTo(self).offset(EFSliderViewMargin)
+                make.right.equalTo(self).offset(-EFSliderViewMargin)
+                make.top.equalTo(self.colorSample.snp.bottom).offset(30 + i * 50)
+                make.height.equalTo(30)
+            }
             colorComponentView.addTarget(
                 self, action: #selector(ef_colorComponentDidChangeValue(_:)), for: UIControlEvents.valueChanged
             )
@@ -101,7 +113,7 @@ public class EFRGBView: UIView, EFColorView {
         }
 
         colorComponentViews = tmp
-        self.ef_installConstraints()
+//        self.ef_installConstraints()
     }
 
     @objc @IBAction private func ef_colorComponentDidChangeValue(_ sender: EFColorComponentView) {
@@ -154,7 +166,7 @@ public class EFRGBView: UIView, EFColorView {
             self.addConstraints(
                 NSLayoutConstraint.constraints(
                     withVisualFormat: visualFormat,
-                    options: NSLayoutFormatOptions(rawValue: 0),
+                    options: NSLayoutFormatOptions(rawValue: 100),
                     metrics: metrics,
                     views: views
                 )
