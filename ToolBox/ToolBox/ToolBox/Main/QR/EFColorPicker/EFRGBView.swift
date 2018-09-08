@@ -82,8 +82,8 @@ public class EFRGBView: UIView, EFColorView {
         colorSample.snp.makeConstraints { (make) in
             make.left.equalTo(self).offset(EFColorSampleViewHeight)
             make.right.equalTo(self).offset(-EFColorSampleViewHeight)
-            make.top.equalTo(self).offset(StatusBarHeight() + 100)
-            make.height.equalTo(100)
+            make.top.equalTo(self)
+            make.height.equalTo(60)
         }
         var tmp: [EFColorComponentView] = []
         let titles = [

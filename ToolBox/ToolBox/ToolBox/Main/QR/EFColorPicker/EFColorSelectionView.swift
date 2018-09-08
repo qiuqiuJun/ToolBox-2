@@ -85,32 +85,38 @@ public class EFColorSelectionView: UIView, EFColorView, EFColorViewDelegate {
         view.delegate = self
         if let view = view as? UIView {
             self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            let views = [
-                "view" : view
-            ]
-            let visualFormats = [
-                "H:|[view]|",
-                "V:|[view]|"
-            ]
-            for visualFormat in visualFormats {
-                self.addConstraints(
-                    NSLayoutConstraint.constraints(
-                        withVisualFormat: visualFormat,
-                        options: NSLayoutFormatOptions(rawValue: 0),
-                        metrics: nil,
-                        views: views
-                    )
-                )
+            view.snp.makeConstraints { (make) in
+                make.left.equalTo(self)
+                make.right.equalTo(self)
+                make.top.equalTo(self).offset(30)
+                make.bottom.equalTo(self)
             }
+//            view.translatesAutoresizingMaskIntoConstraints = false
+//            let views = [
+//                "view" : view
+//            ]
+//            let visualFormats = [
+//                "H:|[view]|",
+//                "V:|[view]|"
+//            ]
+//            for visualFormat in visualFormats {
+//                self.addConstraints(
+//                    NSLayoutConstraint.constraints(
+//                        withVisualFormat: visualFormat,
+//                        options: NSLayoutFormatOptions(rawValue: 0),
+//                        metrics: nil,
+//                        views: views
+//                    )
+//                )
+//            }
         }
     }
 
-    override public func updateConstraints() {
-        self.rgbColorView.setNeedsUpdateConstraints()
-        self.hsbColorView.setNeedsUpdateConstraints()
-        super.updateConstraints()
-    }
+//    override public func updateConstraints() {
+//        self.rgbColorView.setNeedsUpdateConstraints()
+//        self.hsbColorView.setNeedsUpdateConstraints()
+//        super.updateConstraints()
+//    }
 
     // MARK:- FBColorViewDelegate methods
     public func colorView(colorView: EFColorView, didChangeColor color: UIColor) {

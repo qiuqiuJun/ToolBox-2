@@ -73,10 +73,10 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
         self.ef_reloadViewsWithColorComponents(colorComponents: colorComponents)
     }
 
-    override public func updateConstraints() {
-        self.ef_updateConstraints()
-        super.updateConstraints()
-    }
+//    override public func updateConstraints() {
+////        self.ef_updateConstraints()
+////        super.updateConstraints()
+//    }
 
     // MARK:- Private methods
     private func ef_baseInit() {
@@ -85,21 +85,23 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
         colorSample.accessibilityLabel = "color_sample"
         colorSample.layer.borderColor = UIColor.black.cgColor
         colorSample.layer.borderWidth = 0.5
-        colorSample.translatesAutoresizingMaskIntoConstraints = false
+//        colorSample.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorSample)
         colorSample.snp.makeConstraints { (make) in
             make.left.equalTo(self).offset(EFColorSampleViewHeight)
             make.right.equalTo(self).offset(-EFColorSampleViewHeight)
-            make.top.equalTo(self).offset(StatusBarHeight() + 100)
-            make.height.equalTo(100)
+            make.top.equalTo(self)
+            make.height.equalTo(60)
         }
-        colorWheel.translatesAutoresizingMaskIntoConstraints = false
+//        colorWheel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorWheel)
         colorWheel.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.width.equalTo(200)
-            make.height.equalTo(200)
-            make.top.equalTo(colorSample.snp.bottom).offset(100)
+            make.width.equalTo(300)
+            make.height.equalTo(300)
+//            make.left.equalTo(self).offset(30)
+//            make.right.equalTo(self).offset(-30)
+            make.top.equalTo(colorSample.snp.bottom).offset(30)
         }
         
         brightnessView.title = NSLocalizedString("Brightness", comment: "")
@@ -110,9 +112,10 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
         brightnessView.snp.makeConstraints { (make) in
             make.left.equalTo(self).offset(15)
             make.right.equalTo(self).offset(-15)
-
             make.top.equalTo(colorWheel.snp.bottom).offset(30)
         }
+        brightnessView.value = 1.00
+
         colorWheel.addTarget(
             self, action: #selector(ef_colorDidChangeValue(sender:)), for: UIControlEvents.valueChanged
         )
@@ -123,111 +126,111 @@ public class EFHSBView: UIView, EFColorView, UITextFieldDelegate {
 //        self.setNeedsUpdateConstraints()
     }
 
-    private func ef_updateConstraints() {
-        // remove all constraints first
-        if !layoutConstraints.isEmpty {
-            self.removeConstraints(layoutConstraints)
-        }
-
-        layoutConstraints = UIUserInterfaceSizeClass.compact == self.traitCollection.verticalSizeClass
-            ? self.ef_constraintsForCompactVerticalSizeClass()
-            : self.ef_constraintsForRegularVerticalSizeClass()
-
-        self.addConstraints(layoutConstraints)
-    }
-
-    private func ef_constraintsForRegularVerticalSizeClass() -> [NSLayoutConstraint] {
-        let metrics = [
-            "margin" : EFViewMargin,
-            "height" : EFColorSampleViewHeight,
-            "color_wheel_dimension" : EFColorWheelDimension
-        ]
-        let views = [
-            "colorSample" : colorSample,
-            "colorWheel" : colorWheel,
-            "brightnessView" : brightnessView
-        ]
-
-        var layoutConstraints: [NSLayoutConstraint] = []
-        let visualFormats = [
-            "H:|-margin-[colorSample]-margin-|",
-            "H:|-margin-[colorWheel(>=color_wheel_dimension)]-margin-|",
-            "H:|-margin-[brightnessView]-margin-|",
-            "V:|-margin-[colorSample(height)]-margin-[colorWheel]-margin-[brightnessView]-(>=margin@250)-|"
-        ]
-        for visualFormat in visualFormats {
-            layoutConstraints.append(
-                contentsOf: NSLayoutConstraint.constraints(
-                    withVisualFormat: visualFormat,
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: metrics,
-                    views: views
-                )
-            )
-        }
-        layoutConstraints.append(
-            NSLayoutConstraint(
-                item: colorWheel,
-                attribute: NSLayoutAttribute.width,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: colorWheel,
-                attribute: NSLayoutAttribute.height,
-                multiplier: 1,
-                constant: 0)
-        )
-        return layoutConstraints
-    }
-
-    private func ef_constraintsForCompactVerticalSizeClass() -> [NSLayoutConstraint] {
-        let metrics = [
-            "margin" : EFViewMargin,
-            "height" : EFColorSampleViewHeight,
-            "color_wheel_dimension" : EFColorWheelDimension
-        ]
-        let views = [
-            "colorSample" : colorSample,
-            "colorWheel" : colorWheel,
-            "brightnessView" : brightnessView
-        ]
-
-        var layoutConstraints: [NSLayoutConstraint] = []
-        let visualFormats = [
-            "H:|-margin-[colorSample]-margin-|",
-            "H:|-margin-[colorWheel(>=color_wheel_dimension)]-margin-[brightnessView]-(margin@500)-|",
-            "V:|-margin-[colorSample(height)]-margin-[colorWheel]-(margin@500)-|"
-        ]
-        for visualFormat in visualFormats {
-            layoutConstraints.append(
-                contentsOf: NSLayoutConstraint.constraints(
-                    withVisualFormat: visualFormat,
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: metrics,
-                    views: views
-                )
-            )
-        }
-        layoutConstraints.append(
-            NSLayoutConstraint(
-                item: colorWheel,
-                attribute: NSLayoutAttribute.width,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: colorWheel,
-                attribute: NSLayoutAttribute.height,
-                multiplier: 1,
-                constant: 0)
-        )
-        layoutConstraints.append(
-            NSLayoutConstraint(
-                item: brightnessView,
-                attribute: NSLayoutAttribute.centerY,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: self,
-                attribute: NSLayoutAttribute.centerY,
-                multiplier: 1,
-                constant: 0)
-        )
-        return layoutConstraints
-    }
+//    private func ef_updateConstraints() {
+//        // remove all constraints first
+//        if !layoutConstraints.isEmpty {
+//            self.removeConstraints(layoutConstraints)
+//        }
+//
+//        layoutConstraints = UIUserInterfaceSizeClass.compact == self.traitCollection.verticalSizeClass
+//            ? self.ef_constraintsForCompactVerticalSizeClass()
+//            : self.ef_constraintsForRegularVerticalSizeClass()
+//
+//        self.addConstraints(layoutConstraints)
+//    }
+//
+//    private func ef_constraintsForRegularVerticalSizeClass() -> [NSLayoutConstraint] {
+//        let metrics = [
+//            "margin" : EFViewMargin,
+//            "height" : EFColorSampleViewHeight,
+//            "color_wheel_dimension" : EFColorWheelDimension
+//        ]
+//        let views = [
+//            "colorSample" : colorSample,
+//            "colorWheel" : colorWheel,
+//            "brightnessView" : brightnessView
+//        ]
+//
+//        var layoutConstraints: [NSLayoutConstraint] = []
+//        let visualFormats = [
+//            "H:|-margin-[colorSample]-margin-|",
+//            "H:|-margin-[colorWheel(>=color_wheel_dimension)]-margin-|",
+//            "H:|-margin-[brightnessView]-margin-|",
+//            "V:|-margin-[colorSample(height)]-margin-[colorWheel]-margin-[brightnessView]-(>=margin@250)-|"
+//        ]
+//        for visualFormat in visualFormats {
+//            layoutConstraints.append(
+//                contentsOf: NSLayoutConstraint.constraints(
+//                    withVisualFormat: visualFormat,
+//                    options: NSLayoutFormatOptions(rawValue: 0),
+//                    metrics: metrics,
+//                    views: views
+//                )
+//            )
+//        }
+//        layoutConstraints.append(
+//            NSLayoutConstraint(
+//                item: colorWheel,
+//                attribute: NSLayoutAttribute.width,
+//                relatedBy: NSLayoutRelation.equal,
+//                toItem: colorWheel,
+//                attribute: NSLayoutAttribute.height,
+//                multiplier: 1,
+//                constant: 0)
+//        )
+//        return layoutConstraints
+//    }
+//
+//    private func ef_constraintsForCompactVerticalSizeClass() -> [NSLayoutConstraint] {
+//        let metrics = [
+//            "margin" : EFViewMargin,
+//            "height" : EFColorSampleViewHeight,
+//            "color_wheel_dimension" : EFColorWheelDimension
+//        ]
+//        let views = [
+//            "colorSample" : colorSample,
+//            "colorWheel" : colorWheel,
+//            "brightnessView" : brightnessView
+//        ]
+//
+//        var layoutConstraints: [NSLayoutConstraint] = []
+//        let visualFormats = [
+//            "H:|-margin-[colorSample]-margin-|",
+//            "H:|-margin-[colorWheel(>=color_wheel_dimension)]-margin-[brightnessView]-(margin@500)-|",
+//            "V:|-margin-[colorSample(height)]-margin-[colorWheel]-(margin@500)-|"
+//        ]
+//        for visualFormat in visualFormats {
+//            layoutConstraints.append(
+//                contentsOf: NSLayoutConstraint.constraints(
+//                    withVisualFormat: visualFormat,
+//                    options: NSLayoutFormatOptions(rawValue: 0),
+//                    metrics: metrics,
+//                    views: views
+//                )
+//            )
+//        }
+//        layoutConstraints.append(
+//            NSLayoutConstraint(
+//                item: colorWheel,
+//                attribute: NSLayoutAttribute.width,
+//                relatedBy: NSLayoutRelation.equal,
+//                toItem: colorWheel,
+//                attribute: NSLayoutAttribute.height,
+//                multiplier: 1,
+//                constant: 0)
+//        )
+//        layoutConstraints.append(
+//            NSLayoutConstraint(
+//                item: brightnessView,
+//                attribute: NSLayoutAttribute.centerY,
+//                relatedBy: NSLayoutRelation.equal,
+//                toItem: self,
+//                attribute: NSLayoutAttribute.centerY,
+//                multiplier: 1,
+//                constant: 0)
+//        )
+//        return layoutConstraints
+//    }
 
     private func ef_reloadViewsWithColorComponents(colorComponents: HSB) {
         colorWheel.hue = colorComponents.hue

@@ -37,7 +37,7 @@ public protocol EFColorSelectionViewControllerDelegate: class {
 }
 
 public class EFColorSelectionViewController: UIViewController, EFColorViewDelegate,DYSegmentedControlDelegate {
-
+    
     // The controller's delegate. Controller notifies a delegate on color change.
     public weak var delegate: EFColorSelectionViewControllerDelegate?
 
@@ -67,58 +67,100 @@ public class EFColorSelectionViewController: UIViewController, EFColorViewDelega
             }
         }
     }
-    lazy var segmentedControl:TBSegmentedControl = {
-        
+//    lazy var segmentedControl:TBSegmentedControl = {
+//
+//        var array:NSArray = ["RGB","选色板"]
+//        var titleTextAttributes:NSMutableDictionary = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),NSAttributedStringKey.foregroundColor:UIColorFromRGB(rgbValue: 0x666666)]
+//        var selectedTitleTextAttributes:NSMutableDictionary = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),NSAttributedStringKey.foregroundColor:UIColorFromRGB(rgbValue: 0xff5548)]
+//        var mySeg = TBSegmentedControl.init(frame: CGRect( x:0,y: 0,width: self.view.frame.width,height:50), segmentWidthStyle: DYSegmentedControlSegmentWidthStyleContentFit, segmentEdgeInset: UIEdgeInsetsMake(0, 6, 0, 6), selectionIndicatorSize: CGSize.init(width: 40, height: 2), titleTextAttributes: titleTextAttributes as! [AnyHashable : Any], selectedTitleTextAttributes: selectedTitleTextAttributes as! [AnyHashable : Any])
+//            mySeg?.delegate = self;
+//            mySeg?.sectionTitles = array as! [String]
+//            return mySeg!
+//
+//        }()
+    lazy var msgTitle:TBMessageTitleView = {
         var array:NSArray = ["RGB","选色板"]
-        var titleTextAttributes:NSMutableDictionary = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),NSAttributedStringKey.foregroundColor:UIColorFromRGB(rgbValue: 0x666666)]
-        var selectedTitleTextAttributes:NSMutableDictionary = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),NSAttributedStringKey.foregroundColor:UIColorFromRGB(rgbValue: 0xff5548)]
-        var mySeg = TBSegmentedControl.init(frame: CGRect( x:0,y: 0,width: self.view.frame.width,height:50), segmentWidthStyle: DYSegmentedControlSegmentWidthStyleContentFit, segmentEdgeInset: UIEdgeInsetsMake(0, 6, 0, 6), selectionIndicatorSize: CGSize.init(width: 40, height: 2), titleTextAttributes: titleTextAttributes as! [AnyHashable : Any], selectedTitleTextAttributes: selectedTitleTextAttributes as! [AnyHashable : Any])
-            mySeg?.delegate = self;
-            mySeg?.sectionTitles = array as! [String]
-            return mySeg!
+        var myTitle = TBMessageTitleView.init(frame: CGRect( x:0,y: 0,width: 150,height:38))
+        myTitle.setTitle(array as! [Any], selectBloclk: { (index) in
+            self.colorSelectionView().setSelectedIndex(
+                index: EFSelectedColorView(rawValue: index) ?? EFSelectedColorView.RGB,
+                animated: true
+            )
+        })
+        return myTitle
         
-        }()
-//    - (UIView *)segmentedControl {
-//    if (!_segmentedControl) {
-//    NSArray *_sectionTitlesArray = @[@"精选",
-//    @"电影",
-//    //@"电视剧"
-//    ];
-//    NSDictionary *titleTextAttributes = @{NSFontAttributeName : kDYCircleNormalChannelFont,
-//    NSForegroundColorAttributeName : kDYCircleNormalChannelColor};
-//    NSDictionary *selectedTitleTextAttributes = @{NSFontAttributeName : kDYCircleSelectedChannelFont,
-//    NSForegroundColorAttributeName : kDYCircleSelectedChannelColor};
-//    _segmentedControl = [[DYSegmentedControl alloc]
-//    initWithFrame:CGRectMake(0, 0, self.view.width, ksegmentedControlHeight)
-//    segmentWidthStyle:DYSegmentedControlSegmentWidthStyleContentFit
-//    segmentEdgeInset:UIEdgeInsetsMake(0, 6, 0, 6)
-//    selectionIndicatorSize:CGSizeMake(40, 2)
-//    titleTextAttributes:titleTextAttributes
-//    selectedTitleTextAttributes:selectedTitleTextAttributes];
-//    _segmentedControl.delegate = self;
-//    _segmentedControl.sectionTitles = _sectionTitlesArray;
-//    }
-//    return _segmentedControl;
-//    }
-
+    }()
     
+    /*
+     NSArray *titleArr = @[@"消息",@"联系人"];
+     
+     self.msgTitle = [[DYMessageTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 38)];
+     self.msgTitle.backgroundColor = [UIColor clearColor];
+     [titleView addSubview:self.msgTitle];
+     
+     __weak DYMessageVC *weakSelf = self;
+     [self.msgTitle setTitle:titleArr selectBloclk:^(NSInteger index) {
+     DYLog(@"insex === %@",@(index));
+     //加载第一个controller
+     UIViewController *firstVC = [weakSelf.childViewControllers objectAtIndex:index];
+     [weakSelf.view addSubview:firstVC.view];
+     [firstVC.view mas_remakeConstraints:^(MASConstraintMaker *make) {
+     make.left.right.top.bottom.equalTo(weakSelf.view);
+     }];
+     weakSelf.currentType = index;
+     //统计---
+     NSString *eventName = @"";
+     switch (index) {
+     case ConType_ImList:
+     {
+     eventName = DYMSG_Message;
+     }
+     break;
+     case ConType_FriendList:
+     {
+     eventName = DYMSG_Contacts;
+     [weakSelf.msgTitle showRedpointAtIndex:NO index:1];//点击了联系人就隐藏掉小红点
+     [DYIMSingleInstance instance].isEnterContactPage = YES;
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"IZCUpdateRedViewStatus" object:@{@"result":@"0",@"index":[NSString stringWithFormat:@"%d",DYMessageTabIndex]}];
+     }
+     break;
+     case ConType_User:
+     {
+     eventName = DYMSG_PersonalCenter;
+     }
+     break;
+     default:
+     break;
+     }
+     [[DYStatisticsSDK instance] addTouchEvent:NSStringFromClass([weakSelf class]) eventName:eventName extendContent:nil];
+     //统计---
+     
+     }];
+     */
+    
+
     override public func loadView() {
         let colorSelectionView: EFColorSelectionView = EFColorSelectionView(frame: UIScreen.main.bounds)
         self.view = colorSelectionView
     }
     public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(self.segmentedControl);
-        self.segmentedControl.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view)
-            make.right.equalTo(self.view)
-            make.top.equalTo(self.view).offset(StatusBarHeight())
-            make.height.equalTo(50)
-        }
+//        self.view.addSubview(self.segmentedControl);
+//        self.segmentedControl.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view)
+//            make.right.equalTo(self.view)
+//            make.top.equalTo(self.view).offset(StatusBarHeight())
+//            make.height.equalTo(50)
+//        }
+        let titleView = UIView()
+        titleView.backgroundColor = UIColor.clear
+        titleView.frame  = CGRect(x:0,y:0,width:150,height:38)
+        self.navigationItem.titleView = titleView
+        titleView.addSubview(self.msgTitle)
 //
 //        let segmentControl: UISegmentedControl = UISegmentedControl(
 //            items: [NSLocalizedString("RGB", comment: ""), NSLocalizedString("HSB", comment: "")]
@@ -136,12 +178,12 @@ public class EFColorSelectionViewController: UIViewController, EFColorViewDelega
 //        self.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
     }
 
-    @IBAction func segmentControlDidChangeValue(_ segmentedControl: UISegmentedControl) {
-        self.colorSelectionView().setSelectedIndex(
-            index: EFSelectedColorView(rawValue: segmentedControl.selectedSegmentIndex) ?? EFSelectedColorView.RGB,
-            animated: true
-        )
-    }
+//    @IBAction func segmentControlDidChangeValue(_ segmentedControl: UISegmentedControl) {
+//        self.colorSelectionView().setSelectedIndex(
+//            index: EFSelectedColorView(rawValue: segmentedControl.selectedSegmentIndex) ?? EFSelectedColorView.RGB,
+//            animated: true
+//        )
+//    }
 
     override public func viewWillLayoutSubviews() {
         self.colorSelectionView().setNeedsUpdateConstraints()

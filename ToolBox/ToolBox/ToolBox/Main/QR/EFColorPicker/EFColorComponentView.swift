@@ -157,7 +157,7 @@ public class EFColorComponentView: UIControl, UITextFieldDelegate {
         textField.isHidden = !colorTextFieldEnabled
         self.addSubview(textField)
 
-        self.value = 0.0
+        self.value = 1.0
 
         slider.addTarget(self, action: #selector(ef_didChangeSliderValue(sender:)), for: UIControlEvents.valueChanged)
         textField.delegate = self

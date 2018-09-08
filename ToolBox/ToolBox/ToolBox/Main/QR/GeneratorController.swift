@@ -1057,15 +1057,16 @@ extension GeneratorController {
             colorSelectionController.delegate = self
             colorSelectionController.color = EFColorPicker.isFront ?  self.frontColor : self.backColor
 
-//            if UIUserInterfaceSizeClass.compact == self.traitCollection.horizontalSizeClass {
+            if UIUserInterfaceSizeClass.compact == self.traitCollection.horizontalSizeClass {
 //                let doneBtn: UIBarButtonItem = UIBarButtonItem(
-//                    title: NSLocalizedString("Done", comment: ""),
+//                    title: NSLocalizedString("完成", comment: ""),
 //                    style: UIBarButtonItemStyle.done,
 //                    target: self,
 //                    action: #selector(ef_dismissViewController(sender:))
 //                )
-//                colorSelectionController.navigationItem.rightBarButtonItem = doneBtn
-//            }
+                let doneBtn: TLBaseBarButtonItem = TLBaseBarButtonItem.barItem(withTitle: "完成", target: self, action: #selector(ef_dismissViewController(sender:)), leftItem: false)
+                colorSelectionController.navigationItem.rightBarButtonItem = doneBtn
+            }
             self.present(navCtrl, animated: true, completion: nil)
         }
 
