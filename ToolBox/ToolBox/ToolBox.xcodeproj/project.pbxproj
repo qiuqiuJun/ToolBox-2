@@ -72,6 +72,9 @@
 		54728B09214257DD007668E8 /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 54728B08214257DD007668E8 /* appicon.png */; };
 		54728B0B2142957D007668E8 /* TB.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 54728B0A2142957D007668E8 /* TB.bundle */; };
 		54728B0E214362A9007668E8 /* TBMessageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728B0C214362A8007668E8 /* TBMessageTitleView.m */; };
+		54728B1821438180007668E8 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1621438180007668E8 /* ImageHelper.swift */; };
+		54728B1921438180007668E8 /* ImageVIewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1721438180007668E8 /* ImageVIewExtension.swift */; };
+		54728B1C2143AC60007668E8 /* TBQRMudleListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */; };
 		54F4FE5221420956002D884C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5121420956002D884C /* AppDelegate.m */; };
 		54F4FE5521420956002D884C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5421420956002D884C /* ViewController.m */; };
 		54F4FE5821420956002D884C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54F4FE5621420956002D884C /* Main.storyboard */; };
@@ -171,6 +174,11 @@
 		54728B0A2142957D007668E8 /* TB.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TB.bundle; path = Resource/TB.bundle; sourceTree = "<group>"; };
 		54728B0C214362A8007668E8 /* TBMessageTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMessageTitleView.m; sourceTree = "<group>"; };
 		54728B0D214362A9007668E8 /* TBMessageTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMessageTitleView.h; sourceTree = "<group>"; };
+		54728B152143817F007668E8 /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
+		54728B1621438180007668E8 /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
+		54728B1721438180007668E8 /* ImageVIewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVIewExtension.swift; sourceTree = "<group>"; };
+		54728B1A2143AC5F007668E8 /* TBQRMudleListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBQRMudleListVC.h; sourceTree = "<group>"; };
+		54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBQRMudleListVC.m; sourceTree = "<group>"; };
 		54F4FE4D21420956002D884C /* ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToolBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54F4FE5021420956002D884C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		54F4FE5121420956002D884C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -281,6 +289,8 @@
 				54728ACF214251FB007668E8 /* RecognizerController.swift */,
 				54728AD0214251FB007668E8 /* File.swift */,
 				54728AD1214251FB007668E8 /* UIImage+.swift */,
+				54728B1A2143AC5F007668E8 /* TBQRMudleListVC.h */,
+				54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -348,6 +358,9 @@
 		54728B042142566C007668E8 /* TLImageHelper */ = {
 			isa = PBXGroup;
 			children = (
+				54728B152143817F007668E8 /* ImageHelper.h */,
+				54728B1621438180007668E8 /* ImageHelper.swift */,
+				54728B1721438180007668E8 /* ImageVIewExtension.swift */,
 				54728B0521425698007668E8 /* TLImageHelper.h */,
 				54728B0621425698007668E8 /* TLImageHelper.m */,
 			);
@@ -507,6 +520,7 @@
 				54728AF5214251FB007668E8 /* ConstraintMakerRelatable.swift in Sources */,
 				54728B02214251FB007668E8 /* File.swift in Sources */,
 				54728AE6214251FB007668E8 /* Typealiases.swift in Sources */,
+				54728B1C2143AC60007668E8 /* TBQRMudleListVC.m in Sources */,
 				54728AEE214251FB007668E8 /* ConstraintItem.swift in Sources */,
 				54728AD9214251FB007668E8 /* ConstraintViewDSL.swift in Sources */,
 				54728AED214251FB007668E8 /* ConstraintView+Extensions.swift in Sources */,
@@ -547,8 +561,10 @@
 				54728A8A21421405007668E8 /* TLStringKit.m in Sources */,
 				54728AE2214251FB007668E8 /* UILayoutSupport+Extensions.swift in Sources */,
 				54728AFD214251FB007668E8 /* EFControl.swift in Sources */,
+				54728B1821438180007668E8 /* ImageHelper.swift in Sources */,
 				54F4FE5221420956002D884C /* AppDelegate.m in Sources */,
 				54728A80214212D0007668E8 /* TLBaseNavigationController.m in Sources */,
+				54728B1921438180007668E8 /* ImageVIewExtension.swift in Sources */,
 				54728A81214212D0007668E8 /* TLBaseTableViewCell.m in Sources */,
 				54728AFE214251FB007668E8 /* EFColorView.swift in Sources */,
 				54728AE5214251FB007668E8 /* ConstraintLayoutSupport.swift in Sources */,

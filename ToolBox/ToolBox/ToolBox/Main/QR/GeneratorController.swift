@@ -1133,7 +1133,9 @@ extension GeneratorController {
                     }
                 }
             case "icon":
-                self.icon = finalImage
+                
+                self.icon = finalImage?.roundCorners(cornerRadius: 10.0)
+                //设置圆角
             default:
                 break
             }
