@@ -30,7 +30,15 @@
  @param qrSize 二维码的大小
  @return 清晰化处理后的二维码
  */
-+ (UIImage *)clearnessImage:(CIImage *)image qrSize:(CGSize)qrSize;
++ (UIImage *)clearnessCIimage:(CIImage *)image qrSize:(CGSize)qrSize;
+/**
+ 二维码清晰化处理
+ 
+ @param image 原二维码
+ @param qrSize 二维码的大小
+ @return 清晰化处理后的二维码
+ */
++ (UIImage *)clearnessUIimage:(UIImage *)image qrSize:(CGSize)qrSize;
 
 /**
  给二维码添加logo

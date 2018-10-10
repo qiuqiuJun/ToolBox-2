@@ -11,6 +11,7 @@
 #import "TLBaseBarButtonItem.h"
 #import "TLBaseTableViewCell.h"
 #import "Masonry.h"
+#import "TBEnumDefine.h"
 #define DYDeviceRotateToVerticalNotification @"DYDeviceRotateToVertical"
 #define DYDeviceRotateToHorizontalNotification @"DYDeviceRotateToHorizontal"
 #define DYDeviceDidRotateNotification @"DYDeviceDidRotate"

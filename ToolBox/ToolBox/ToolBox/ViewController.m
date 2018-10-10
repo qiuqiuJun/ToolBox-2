@@ -28,18 +28,6 @@
     [self.myTab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.bottom.equalTo(weakSelf.view);
     }];
-    
-//    UIImageView *imagevie = [[UIImageView alloc] init];
-//    imagevie.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:imagevie];
-//    [imagevie mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(weakSelf.view);
-//        make.centerY.equalTo(weakSelf.view);
-//        make.width.mas_equalTo(70);
-//        make.height.mas_equalTo(70);
-//    }];
-//    UIImage *image = [TLImageHelper filterImage:[UIImage imageNamed:@"appicon"] value:50.0];
-//    imagevie.image = image;
 }
 #pragma -mark -lazy
 - (UITableView *)myTab{
@@ -56,7 +44,7 @@
     if (nil ==  _itemArr) {
         _itemArr = [[NSMutableArray alloc] initWithObjects:
                     @{@"title":@"二维码扫描",@"className":@"RecognizerController"},
-                    @{@"title":@"二维码DIY",@"className":@"GeneratorController"},
+                    @{@"title":@"二维码DIY",@"className":@"TBQRMudleListVC"},
                     @{@"title":@"手电筒",@"className":@"WkJsVC"},
                     @{@"title":@"放大镜",@"className":@"ChangeAppIconVC"},
                     @{@"title":@"分贝记",@"className":@"CopyAndMutableCopyVC"},

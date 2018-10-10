@@ -6,3 +6,6 @@
 #import "TBSegmentedControl.h"
 #import "TBMessageTitleView.h"
 #import "TLBaseBarButtonItem.h"
+#import "TLBaseViewController.h"
+#import "QRSettingMenuCollectionView.h"
+#import "TBQRModel.h"

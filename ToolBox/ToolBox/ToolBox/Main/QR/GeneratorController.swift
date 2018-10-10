@@ -56,37 +56,49 @@ class EFImage {
     }
 }
 
-class GeneratorController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
+@objcMembers class GeneratorController: TLBaseViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
 
     #if os(iOS)
     var imagePicker: UIImagePickerController?
     #endif
 
-    var textView: UITextView!
-    var tableView: UITableView!
-    var createButton: UIButton!
-
+//    var textView: UITextView!
+//    var tableView: UITableView!
+//    var createButton: UIButton!
+    var qrImageView:UIImageView!
+    
     var titleCurrent: String = ""
+    var qrContent: String?
 
     // Param
     var inputCorrectionLevel = EFInputCorrectionLevel.h
-    var size: EFIntSize = EFIntSize(width: 1024, height: 1024)
+    public var qrSizeWidth:Int = 1024
+    public var qrSizeHeight:Int = 1024
+
+    var size: EFIntSize = EFIntSize(width:1024, height:1024)
     //二维码的可放大率，放大率越高方法后越清晰
-    var magnification: EFIntSize? = EFIntSize(width: 10, height: 10)
+    var magnification: EFIntSize? = EFIntSize(width: 20, height: 20)
     var backColor = UIColor.white
     var frontColor = UIColor.black
     var icon: UIImage? = nil
-    var iconSize: EFIntSize? = EFIntSize(width: 80,height: 80)
+    var iconSize: EFIntSize? = EFIntSize(width: 70,height: 70)
+    var iconCorner: CGFloat? = 10.0
     var watermarkMode = EFWatermarkMode.scaleAspectFill
     var mode: EFQRCodeMode = .none
     var binarizationThreshold: CGFloat = 0.5
     var pointShape: EFPointShape = .square
     var watermark: EFImage? = nil
     var watermarkFilterValue: CGFloat = 30.0
+    
     //默认图
     var defaultWatermarkIconName:[String] = ["TB.bundle/function/QR/jd","TB.bundle/function/QR/tianmao","TB.bundle/function/QR/taobao","TB.bundle/function/QR/wechat","TB.bundle/function/QR/qq"]
     //默认图名字
     var defaultWatermarkDesName:[String] = ["京东", "天猫", "淘宝", "微信", "QQ"]
+    // 底部设置菜单
+    var bottomMenu:QRSettingMenuCollectionView!
+    //底部颜色设置菜单
+//    var bottomColorsMenu:QRSettingMenuCollectionView!
+    var bottomMenu2:QRSettingMenuCollectionView!
 
     // MARK:- Not commonly used
     var foregroundPointOffset: CGFloat = 0
@@ -106,15 +118,22 @@ extension GeneratorController {
         super.viewDidLoad()
 
         self.title = "二维码DIY"
-//        self.automaticallyAdjustsScrollViewInsets = false
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColorFromRGB(rgbValue: 0xf1f1f1)
         setupViews()
     }
 
-    func setupViews() {
-        let buttonHeight: CGFloat = 46
-
-        // Add test data
+    func setupViews() {        
+        //导航右边按钮
+        let button:UIButton = UIButton.init(type: .custom)
+        button.frame = CGRect(x:0,y:0,width:32,height:32)
+        button.backgroundColor = UIColor.clear
+        button.addTarget(self, action: #selector(shareOrSave), for: UIControlEvents.touchUpInside)
+        button.setImage(UIImage.init(named: "TB.bundle/TB/share"), for: .normal)
+        button.imageView?.contentMode = .right
+        let rightNavItem:TLBaseBarButtonItem = TLBaseBarButtonItem.barItem(withCustomView: button)
+        self.navigationItem.rightBarButtonItem = rightNavItem
+        
+        // Add data
         let colorNameArray = [
             "黑色", "深灰", "浅灰", "白色", "灰色", "红色", "绿色", "蓝色",
             "黄色", "棕色", "透明"
@@ -136,77 +155,184 @@ extension GeneratorController {
         for (index, colorName) in colorNameArray.enumerated() {
             colorList.append(GeneratorController.colorData(color: colorArray[index], name: colorName))
         }
-
-        // Content
-        textView = UITextView()
-        textView.text = "https://github.com/EyreFree/EFQRCode"
-        textView.tintColor = UIColor.darkGray//UIColor(red: 97.0 / 255.0, green: 207.0 / 255.0, blue: 199.0 / 255.0, alpha: 1)
-        textView.font = UIFont.systemFont(ofSize: 24)
-        textView.textColor = UIColor.lightGray
-        textView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.32)
-        textView.layer.borderColor = UIColor.black.cgColor
-        textView.layer.borderWidth = 1
-        textView.layer.cornerRadius = 5
-        textView.layer.masksToBounds = true
-        textView.delegate = self
-        textView.returnKeyType = .done
-        self.view.addSubview(textView)
-        textView.snp.makeConstraints {
+        qrImageView = UIImageView()
+        qrImageView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.64)
+        qrImageView.contentMode = .scaleAspectFit
+        qrImageView.layer.borderColor = UIColor.white.cgColor
+        qrImageView.layer.borderWidth = 1
+        qrImageView.layer.cornerRadius = 5
+        qrImageView.layer.masksToBounds = true
+        self.view.addSubview(qrImageView)//
+        qrImageView.snp.makeConstraints {
             (make) in
             make.left.equalTo(10)
             make.top.equalTo(self.view).offset(15)
             make.width.equalTo(self.view).offset(-20)
-            make.height.equalTo(self.view).dividedBy(3.0)
+            make.height.equalTo(self.view.snp.width).offset(-20)
         }
+        let iconDesArr:NSArray = ["颜色","文字","Logo","底图","码点"]
+        let iconNameArr:NSArray = ["TB.bundle/TB/color","TB.bundle/TB/qrText","TB.bundle/TB/logo","TB.bundle/TB/qrBg","TB.bundle/TB/point"]
+        let modelArr:NSMutableArray = NSMutableArray.init(capacity: 0)
+        
+        for i in 0...4{
+            let model:TBQRModel = TBQRModel()
+            model.iconName = iconNameArr[i] as! String
+            model.title = iconDesArr[i] as! String
+            modelArr.add(model)
+        }
+        
+        let bottomColors:NSMutableArray = NSMutableArray.init(capacity: 0)
+        var colos:[UIColor] = [UIColor.black,UIColor.gray,UIColor.darkGray,UIColor.lightGray,UIColor.red,UIColor.green,UIColor.blue,UIColor.orange,UIColor.yellow,UIColor.init(red: 1.0, green: 20.0/255.0, blue: 252.0/255.0, alpha: 1.0),UIColor.init(red: 183.0/255.0, green: 1.0, blue: 30.0/255.0, alpha: 1.0),UIColor.init(red: 40/255.0, green: 250/255.0, blue: 1.0, alpha: 1.0),UIColor.init(red: 176.0/255.0, green: 40.0/255.0, blue: 255.0/255.0, alpha: 1.0)]
+        for j in 0...(colos.count - 1){
+            bottomColors.add(colos[j])
+        }
+        weak var weakSelf = self
 
-        // tableView
-        tableView = UITableView()
-        tableView.bounces = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.alwaysBounceVertical = true
-        #if os(iOS)
-            tableView.separatorColor = UIColor.gray
-        #endif
-        tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.backgroundColor = UIColor.clear
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        self.view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            (make) in
-            make.left.equalTo(0)
-            make.top.equalTo(textView.snp.bottom)
-            make.width.equalTo(self.view)
+        //底部菜单栏目
+        bottomMenu = QRSettingMenuCollectionView.init(frame: CGRect(x:0,y:0,width:self.view.frame.width,height:80))
+        bottomMenu.backgroundColor = UIColorFromRGB(rgbValue: 0xffffff)
+        bottomMenu.iconWidth = 30
+        bottomMenu.iconHeight = 30
+        bottomMenu.iconTitleSpace = 9
+        bottomMenu.titleFont = 15
+        bottomMenu.titleColor = UIColorFromRGB(rgbValue: 0x656d7a)
+        bottomMenu.collectionType = CollectionType_qrMenu
+        bottomMenu.dataArray = modelArr
+        bottomMenu.block = {(index,model) in
+            switch index {
+            case 0:
+                print("wewddd")
+                weakSelf?.bottomMenu2.isHidden = !(weakSelf?.bottomMenu2.isHidden)!
+            case 2:
+                //                self.frontColor = UIColor.red
+                //                self.createCode()
+                weakSelf?.chooseImageFromAlbum(title: "icon")
+            case 3:
+                weakSelf?.chooseImageFromAlbum(title: "watermark")
+            default:
+                print("121")
+            }
         }
-
-        createButton = UIButton(type: .system)
-        createButton.setTitle("Create", for: .normal)
-        createButton.setTitleColor(
-            UIColor(red: 246.0 / 255.0, green: 137.0 / 255.0, blue: 222.0 / 255.0, alpha: 1), for: .normal
-        )
-        createButton.layer.borderColor = UIColor.white.cgColor
-        createButton.layer.borderWidth = 1
-        createButton.layer.cornerRadius = 5
-        createButton.layer.masksToBounds = true
-        #if os(iOS)
-            createButton.addTarget(self, action: #selector(GeneratorController.createCode), for: .touchDown)
-        #else
-            createButton.addTarget(self, action: #selector(GeneratorController.createCode), for: .primaryActionTriggered)
-        #endif
-        self.view.addSubview(createButton)
-        createButton.snp.makeConstraints {
-            (make) in
-            make.left.equalTo(10)
-            make.top.equalTo(tableView.snp.bottom)
-            make.width.equalTo(self.view).offset(-20)
-            make.height.equalTo(buttonHeight)
-            make.bottom.equalTo(-10)
+        self.view.addSubview(bottomMenu)
+        bottomMenu.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
+            make.bottom.equalTo(self.view)
+            make.height.equalTo(80)
         }
+//        bottomColorsMenu = QRSettingMenuCollectionView.init(frame: CGRect(x:0,y:0,width:self.view.frame.width,height:80))
+//        bottomColorsMenu.backgroundColor = UIColorFromRGB(rgbValue: 0xffffff)
+//        bottomColorsMenu.collectionType = CollectionType_qrColor
+////        bottomColorsMenu.rowItemCount = 6
+//        bottomColorsMenu.dataArray = bottomColors
+//        bottomColorsMenu.colorBlock = {(index,color) in
+//            weakSelf?.frontColor = color!
+//            weakSelf?.createCode()
+//        }
+//        self.view .addSubview(bottomColorsMenu);
+//        bottomColorsMenu.snp.makeConstraints { (make) in
+//            make.left.equalTo(self.view)
+//            make.right.equalTo(self.view)
+//            make.bottom.equalTo(self.view).offset(-160)
+//            make.height.equalTo(80)
+//        }
+        //底部菜单栏目
+        bottomMenu2 = QRSettingMenuCollectionView.init(frame: CGRect(x:0,y:0,width:self.view.frame.width,height:60))
+        bottomMenu2.backgroundColor = UIColorFromRGB(rgbValue: 0xffffff)
+//        bottomMenu2.iconWidth = 60
+//        bottomMenu2.iconHeight = 60
+//        bottomMenu2.iconTitleSpace = 9
+//        bottomMenu2.titleFont = 15
+//        bottomMenu2.titleColor = UIColorFromRGB(rgbValue: 0x656d7a)
+        bottomMenu2.rowItemCount = 6
+        bottomMenu2.collectionType = CollectionType_qrColor
+        bottomMenu2.dataArray = bottomColors
+        bottomMenu2.colorBlock = {(index,color) in
+            weakSelf?.frontColor = color!
+            weakSelf?.createCode()
+        }
+        self.view.addSubview(bottomMenu2)
+        bottomMenu2.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
+            make.bottom.equalTo(self.view).offset(-80)
+            make.height.equalTo(80)
+        }
+        bottomMenu2.isHidden = true
+        
+        // Content
+//        textView = UITextView()
+//        textView.text = "https://github.com/EyreFree/EFQRCode"
+//        textView.tintColor = UIColor.darkGray//UIColor(red: 97.0 / 255.0, green: 207.0 / 255.0, blue: 199.0 / 255.0, alpha: 1)
+//        textView.font = UIFont.systemFont(ofSize: 24)
+//        textView.textColor = UIColor.lightGray
+//        textView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.32)
+//        textView.layer.borderColor = UIColor.black.cgColor
+//        textView.layer.borderWidth = 1
+//        textView.layer.cornerRadius = 5
+//        textView.layer.masksToBounds = true
+//        textView.delegate = self
+//        textView.returnKeyType = .done
+//        self.view.addSubview(textView)
+//        textView.snp.makeConstraints {
+//            (make) in
+//            make.left.equalTo(10)
+//            make.top.equalTo(self.view).offset(15)
+//            make.width.equalTo(self.view).offset(-20)
+//            make.height.equalTo(self.view).dividedBy(3.0)
+//        }
+//
+//        // tableView
+//        tableView = UITableView()
+//        tableView.bounces = false
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.alwaysBounceVertical = true
+//        #if os(iOS)
+//            tableView.separatorColor = UIColor.gray
+//        #endif
+//        tableView.showsVerticalScrollIndicator = false
+//        tableView.showsHorizontalScrollIndicator = false
+//        tableView.backgroundColor = UIColor.clear
+//        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+//        self.view.addSubview(tableView)
+//        tableView.snp.makeConstraints {
+//            (make) in
+//            make.left.equalTo(0)
+//            make.top.equalTo(textView.snp.bottom)
+//            make.width.equalTo(self.view)
+//        }
+//
+//        createButton = UIButton(type: .system)
+//        createButton.setTitle("Create", for: .normal)
+//        createButton.setTitleColor(
+//            UIColor(red: 246.0 / 255.0, green: 137.0 / 255.0, blue: 222.0 / 255.0, alpha: 1), for: .normal
+//        )
+//        createButton.layer.borderColor = UIColor.white.cgColor
+//        createButton.layer.borderWidth = 1
+//        createButton.layer.cornerRadius = 5
+//        createButton.layer.masksToBounds = true
+//        #if os(iOS)
+//            createButton.addTarget(self, action: #selector(GeneratorController.createCode), for: .touchDown)
+//        #else
+//            createButton.addTarget(self, action: #selector(GeneratorController.createCode), for: .primaryActionTriggered)
+//        #endif
+//        self.view.addSubview(createButton)
+//        createButton.snp.makeConstraints {
+//            (make) in
+//            make.left.equalTo(10)
+//            make.top.equalTo(tableView.snp.bottom)
+//            make.width.equalTo(self.view).offset(-20)
+//            make.height.equalTo(buttonHeight)
+//            make.bottom.equalTo(-10)
+//        }
+        createCode()
     }
-
+    func shareOrSave(){
+        
+    }
     func refresh() {
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     func UIImage2CGimage(_ image: UIImage?) -> CGImage? {
         if let tryImage = image, let tryCIImage = CIImage(image: tryImage) {
@@ -216,11 +342,13 @@ extension GeneratorController {
     }
     @objc func createCode() {
         // Lock user activity
-        createButton.isEnabled = false
-
+//        createButton.isEnabled = false
         var content = ""
-        if !(nil == textView.text || textView.text == "") {
-            content = textView.text
+//        if !(nil == textView.text || textView.text == "") {
+//            content = textView.text
+//        }
+        if !(nil == self.qrContent || self.qrContent == "") {
+            content = self.qrContent!
         }
 
         let generator = EFQRCodeGenerator(content: content, size: size)
@@ -239,7 +367,19 @@ extension GeneratorController {
             generator.setWatermark(watermark: nil, mode: watermarkMode)
 
             if let afterData = EFQRCode.generateWithGIF(data: data, generator: generator) {
-                self.present(ShowController(image: EFImage(afterData)), animated: true, completion: nil)
+//                self.present(ShowController(image: EFImage(afterData)), animated: true, completion: nil)
+//                if let dataGIF = (EFImage(afterData)) as? Data {
+                if let source = CGImageSourceCreateWithData(EFImage(afterData)?.data as! CFData, nil) {
+                        var images = [UIImage]()
+                        for cgImage in source.toCGImages() {
+                            images.append(UIImage(cgImage: cgImage))
+                        }
+                        qrImageView.animationImages = images
+                        qrImageView.startAnimating()
+                    }
+//                }
+
+
             } else {
                 let alert = UIAlertController(title: "Warning", message: "Create QRCode failed!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -251,7 +391,9 @@ extension GeneratorController {
 
             if let tryCGImage = generator.generate() {
                 let tryImage = UIImage(cgImage: tryCGImage)
-                self.present(ShowController(image: EFImage(tryImage)), animated: true, completion: nil)
+//                self.present(ShowController(image: EFImage(tryImage)), animated: true, completion: nil)
+                qrImageView.image = (EFImage(tryImage))?.data as? UIImage
+
             } else {
                 let alert = UIAlertController(title: "Warning", message: "Create QRCode failed!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -260,7 +402,7 @@ extension GeneratorController {
         }
 
         // Recove user activity
-        createButton.isEnabled = true
+//        createButton.isEnabled = true
     }
 
     // UITextViewDelegate
@@ -896,8 +1038,7 @@ extension GeneratorController {
     // UITableViewDelegate & UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        [chooseSize,
-         chooseBackColor, chooseFrontColor, chooseIcon,
+        [chooseSize,chooseFrontColor, chooseIcon,
          chooseWatermark, chooseShape][indexPath.row]()
 
         if 4 == indexPath.row {
@@ -916,7 +1057,7 @@ extension GeneratorController {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -935,8 +1076,8 @@ extension GeneratorController {
         //设置选项
         let titleArray = [
             "二维码尺寸",
-            "背景色",
-            "前景色",
+//            "背景色",
+            "二维码颜色",
             "Logo",
 //            "logo尺寸",
             "二维码背景图",
@@ -953,7 +1094,7 @@ extension GeneratorController {
         //设置选项详情
         let detailArray = [
             "\(size.width)x\(size.height)",
-            "", // backgroundColor
+//            "", // backgroundColor
             "", // foregroundColor
             "", // icon
 //            "20x20",
@@ -999,13 +1140,13 @@ extension GeneratorController {
             cell.accessoryView = rightImageView
 
             switch indexPath.row {
+//            case 1:
+//                rightImageView.backgroundColor = backColor
             case 1:
-                rightImageView.backgroundColor = backColor
-            case 2:
                 rightImageView.backgroundColor = frontColor
-            case 3:
+            case 2:
                 rightImageView.image = icon
-            case 4:
+            case 3:
                 rightImageView.stopAnimating()
                 if watermark?.isGIF == true {
                     if let dataGIF = watermark?.data as? Data {
@@ -1047,8 +1188,8 @@ extension GeneratorController {
 //            navCtrl.navigationBar.isTranslucent = false
             navCtrl.modalPresentationStyle = UIModalPresentationStyle.popover
             navCtrl.popoverPresentationController?.delegate = self
-            navCtrl.popoverPresentationController?.sourceView = tableView
-            navCtrl.popoverPresentationController?.sourceRect = tableView.bounds
+//            navCtrl.popoverPresentationController?.sourceView = tableView
+//            navCtrl.popoverPresentationController?.sourceRect = tableView.bounds
             navCtrl.preferredContentSize = colorSelectionController.view.systemLayoutSizeFitting(
                 UILayoutFittingCompressedSize
             )
@@ -1108,18 +1249,20 @@ extension GeneratorController {
 
             switch titleCurrent {
             case "watermark":
-                //对地图进行模糊处理
-                if let filterImage:UIImage = TLImageHelper.filterImage(finalImage, value: self.watermarkFilterValue){
-                    self.watermark = EFImage(filterImage)
-                    //调整大小
-//                    if let changeSizeImage:UIImage = TLImageHelper.imageResize(filterImage, andResizeTo: CGSize(width: self.size.width, height: self.size.height)){
-//                        self.watermark = EFImage(changeSizeImage)
-//                    }else{
-//                        self.watermark = EFImage(finalImage)
-//                    }
+                //调整大小
+                if let changeSizeImage:UIImage = TLImageHelper.imageResize(finalImage, andResizeTo: CGSize(width: self.qrSizeWidth, height: self.qrSizeHeight)){
+//                    self.watermark = EFImage(changeSizeImage)
+                    if let filterImage:UIImage = TLImageHelper.filterImage(changeSizeImage, value: self.watermarkFilterValue){
+                        self.watermark = EFImage(filterImage)
+                    }else{
+                        self.watermark = EFImage(finalImage)
+                    }
                 }else{
-                    self.watermark = EFImage(finalImage)
+//                    self.watermark = EFImage(finalImage)
                 }
+                
+                //对地图进行模糊处理
+
 
                 var images = [EFImage]()
                 if let imageUrl = info[UIImagePickerControllerReferenceURL] as? URL {
@@ -1132,14 +1275,17 @@ extension GeneratorController {
                         watermark = tryGIF
                     }
                 }
+                self.createCode()
             case "icon":
-                
-                self.icon = finalImage?.roundCorners(cornerRadius: 10.0)
+                //清晰化处理
+                self.icon = TLImageHelper.clearnessUIimage(finalImage, qrSize: CGSize.init(width: 70, height: 70))
                 //设置圆角
+                self.icon = finalImage?.roundCorners(cornerRadius: self.iconCorner!)
+                self.createCode()
             default:
                 break
             }
-            self.refresh()
+//            self.refresh()
 
             picker.dismiss(animated: true, completion: nil)
         }
@@ -1150,7 +1296,7 @@ extension GeneratorController {
         func selectedAlbumPhotosIncludingGifWithPHAssets(assets: [PHAsset]) -> [EFImage] {
             var imageArray = [EFImage]()
 
-            let targetSize: CGSize = CGSize(width: 1024, height: 1024)
+            let targetSize: CGSize = CGSize(width: self.qrSizeWidth, height: self.qrSizeHeight)
 
             let options: PHImageRequestOptions = PHImageRequestOptions()
             options.resizeMode = PHImageRequestOptionsResizeMode.fast

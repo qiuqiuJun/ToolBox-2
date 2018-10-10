@@ -74,7 +74,14 @@
 		54728B0E214362A9007668E8 /* TBMessageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728B0C214362A8007668E8 /* TBMessageTitleView.m */; };
 		54728B1821438180007668E8 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1621438180007668E8 /* ImageHelper.swift */; };
 		54728B1921438180007668E8 /* ImageVIewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1721438180007668E8 /* ImageVIewExtension.swift */; };
-		54728B1C2143AC60007668E8 /* TBQRMudleListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */; };
+		547B56C22144008C00D80984 /* TBQRMudleListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 547B56C12144008C00D80984 /* TBQRMudleListVC.m */; };
+		547B56C52144014800D80984 /* TBQRMudleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 547B56C42144014800D80984 /* TBQRMudleCollectionCell.m */; };
+		547B56C8214403E600D80984 /* TBQRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 547B56C7214403E600D80984 /* TBQRModel.m */; };
+		547E881F2144B5B600E5FA71 /* TBQRInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 547E881E2144B5B600E5FA71 /* TBQRInputVC.m */; };
+		547E88252144E84300E5FA71 /* QRAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 547E88242144E84300E5FA71 /* QRAddCell.m */; };
+		547E88282144FC1800E5FA71 /* QRSettingMenuCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 547E88272144FC1800E5FA71 /* QRSettingMenuCollectionView.m */; };
+		547E882B2144FECB00E5FA71 /* TBBaseUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 547E882A2144FECB00E5FA71 /* TBBaseUITableView.m */; };
+		547E882E2144FEF900E5FA71 /* TBBaseUICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 547E882D2144FEF900E5FA71 /* TBBaseUICollectionView.m */; };
 		54F4FE5221420956002D884C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5121420956002D884C /* AppDelegate.m */; };
 		54F4FE5521420956002D884C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F4FE5421420956002D884C /* ViewController.m */; };
 		54F4FE5821420956002D884C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54F4FE5621420956002D884C /* Main.storyboard */; };
@@ -177,8 +184,23 @@
 		54728B152143817F007668E8 /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
 		54728B1621438180007668E8 /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		54728B1721438180007668E8 /* ImageVIewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVIewExtension.swift; sourceTree = "<group>"; };
-		54728B1A2143AC5F007668E8 /* TBQRMudleListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBQRMudleListVC.h; sourceTree = "<group>"; };
-		54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBQRMudleListVC.m; sourceTree = "<group>"; };
+		547B56C02144008C00D80984 /* TBQRMudleListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBQRMudleListVC.h; sourceTree = "<group>"; };
+		547B56C12144008C00D80984 /* TBQRMudleListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBQRMudleListVC.m; sourceTree = "<group>"; };
+		547B56C32144014800D80984 /* TBQRMudleCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBQRMudleCollectionCell.h; sourceTree = "<group>"; };
+		547B56C42144014800D80984 /* TBQRMudleCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBQRMudleCollectionCell.m; sourceTree = "<group>"; };
+		547B56C6214403E600D80984 /* TBQRModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBQRModel.h; sourceTree = "<group>"; };
+		547B56C7214403E600D80984 /* TBQRModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBQRModel.m; sourceTree = "<group>"; };
+		547E881D2144B5B600E5FA71 /* TBQRInputVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBQRInputVC.h; sourceTree = "<group>"; };
+		547E881E2144B5B600E5FA71 /* TBQRInputVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBQRInputVC.m; sourceTree = "<group>"; };
+		547E88202144DB3500E5FA71 /* TBEnumDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBEnumDefine.h; sourceTree = "<group>"; };
+		547E88232144E84300E5FA71 /* QRAddCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRAddCell.h; sourceTree = "<group>"; };
+		547E88242144E84300E5FA71 /* QRAddCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRAddCell.m; sourceTree = "<group>"; };
+		547E88262144FC1800E5FA71 /* QRSettingMenuCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRSettingMenuCollectionView.h; sourceTree = "<group>"; };
+		547E88272144FC1800E5FA71 /* QRSettingMenuCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRSettingMenuCollectionView.m; sourceTree = "<group>"; };
+		547E88292144FECB00E5FA71 /* TBBaseUITableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBBaseUITableView.h; sourceTree = "<group>"; };
+		547E882A2144FECB00E5FA71 /* TBBaseUITableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBBaseUITableView.m; sourceTree = "<group>"; };
+		547E882C2144FEF900E5FA71 /* TBBaseUICollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBBaseUICollectionView.h; sourceTree = "<group>"; };
+		547E882D2144FEF900E5FA71 /* TBBaseUICollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBBaseUICollectionView.m; sourceTree = "<group>"; };
 		54F4FE4D21420956002D884C /* ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToolBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54F4FE5021420956002D884C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		54F4FE5121420956002D884C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -231,6 +253,7 @@
 				540D8FC72142C0FC0060D5C9 /* TBSwiftDefine.swift */,
 				54728A8521421379007668E8 /* TLThemeDefine.h */,
 				54728A862142137A007668E8 /* TLMacroUtility.h */,
+				547E88202144DB3500E5FA71 /* TBEnumDefine.h */,
 			);
 			path = Define;
 			sourceTree = "<group>";
@@ -258,6 +281,10 @@
 				54728A7B214212CF007668E8 /* TLBaseTableViewCell.m */,
 				54728A9321422E3E007668E8 /* ToolBox-Bridging-Header.h */,
 				54728A9621422F57007668E8 /* ViewController2.swift */,
+				547E88292144FECB00E5FA71 /* TBBaseUITableView.h */,
+				547E882A2144FECB00E5FA71 /* TBBaseUITableView.m */,
+				547E882C2144FEF900E5FA71 /* TBBaseUICollectionView.h */,
+				547E882D2144FEF900E5FA71 /* TBBaseUICollectionView.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -282,6 +309,9 @@
 		54728A9C214251FB007668E8 /* QR */ = {
 			isa = PBXGroup;
 			children = (
+				547B56BF2144008C00D80984 /* Controller */,
+				547B56BD2144008C00D80984 /* Model */,
+				547B56BE2144008C00D80984 /* View */,
 				54728A9D214251FB007668E8 /* CGFloat+.swift */,
 				54728A9E214251FB007668E8 /* GeneratorController.swift */,
 				54728A9F214251FB007668E8 /* SnapKit */,
@@ -289,8 +319,6 @@
 				54728ACF214251FB007668E8 /* RecognizerController.swift */,
 				54728AD0214251FB007668E8 /* File.swift */,
 				54728AD1214251FB007668E8 /* UIImage+.swift */,
-				54728B1A2143AC5F007668E8 /* TBQRMudleListVC.h */,
-				54728B1B2143AC60007668E8 /* TBQRMudleListVC.m */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -365,6 +393,39 @@
 				54728B0621425698007668E8 /* TLImageHelper.m */,
 			);
 			path = TLImageHelper;
+			sourceTree = "<group>";
+		};
+		547B56BD2144008C00D80984 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				547B56C6214403E600D80984 /* TBQRModel.h */,
+				547B56C7214403E600D80984 /* TBQRModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		547B56BE2144008C00D80984 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				547B56C32144014800D80984 /* TBQRMudleCollectionCell.h */,
+				547B56C42144014800D80984 /* TBQRMudleCollectionCell.m */,
+				547E88232144E84300E5FA71 /* QRAddCell.h */,
+				547E88242144E84300E5FA71 /* QRAddCell.m */,
+				547E88262144FC1800E5FA71 /* QRSettingMenuCollectionView.h */,
+				547E88272144FC1800E5FA71 /* QRSettingMenuCollectionView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		547B56BF2144008C00D80984 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				547B56C02144008C00D80984 /* TBQRMudleListVC.h */,
+				547B56C12144008C00D80984 /* TBQRMudleListVC.m */,
+				547E881D2144B5B600E5FA71 /* TBQRInputVC.h */,
+				547E881E2144B5B600E5FA71 /* TBQRInputVC.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		54F4FE4421420956002D884C = {
@@ -513,14 +574,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				547E882B2144FECB00E5FA71 /* TBBaseUITableView.m in Sources */,
 				54728AFB214251FB007668E8 /* EFColorWheelView.swift in Sources */,
 				54728AE3214251FB007668E8 /* ConstraintView.swift in Sources */,
 				54728AD4214251FB007668E8 /* ConstraintMultiplierTarget.swift in Sources */,
 				54728AFC214251FB007668E8 /* EFRGBView.swift in Sources */,
 				54728AF5214251FB007668E8 /* ConstraintMakerRelatable.swift in Sources */,
 				54728B02214251FB007668E8 /* File.swift in Sources */,
+				547E88252144E84300E5FA71 /* QRAddCell.m in Sources */,
 				54728AE6214251FB007668E8 /* Typealiases.swift in Sources */,
-				54728B1C2143AC60007668E8 /* TBQRMudleListVC.m in Sources */,
+				547E88282144FC1800E5FA71 /* QRSettingMenuCollectionView.m in Sources */,
+				547B56C22144008C00D80984 /* TBQRMudleListVC.m in Sources */,
 				54728AEE214251FB007668E8 /* ConstraintItem.swift in Sources */,
 				54728AD9214251FB007668E8 /* ConstraintViewDSL.swift in Sources */,
 				54728AED214251FB007668E8 /* ConstraintView+Extensions.swift in Sources */,
@@ -536,10 +600,13 @@
 				54728AF4214251FB007668E8 /* ConstraintLayoutSupportDSL.swift in Sources */,
 				54728AEF214251FB007668E8 /* Constraint.swift in Sources */,
 				54728A8421421305007668E8 /* TLBaseBarButtonItem.m in Sources */,
+				547B56C52144014800D80984 /* TBQRMudleCollectionCell.m in Sources */,
 				54728AE8214251FB007668E8 /* ConstraintOffsetTarget.swift in Sources */,
 				54F4FE5521420956002D884C /* ViewController.m in Sources */,
 				54728B00214251FB007668E8 /* EFColorSelectionViewController.swift in Sources */,
+				547E882E2144FEF900E5FA71 /* TBBaseUICollectionView.m in Sources */,
 				54728ADA214251FB007668E8 /* ConstraintPriorityTarget.swift in Sources */,
+				547B56C8214403E600D80984 /* TBQRModel.m in Sources */,
 				54728AF1214251FB007668E8 /* ConstraintRelatableTarget.swift in Sources */,
 				54728AD6214251FB007668E8 /* ConstraintDescription.swift in Sources */,
 				54728ADE214251FB007668E8 /* ConstraintMakerExtendable.swift in Sources */,
@@ -579,6 +646,7 @@
 				54728B0721425698007668E8 /* TLImageHelper.m in Sources */,
 				54728B01214251FB007668E8 /* RecognizerController.swift in Sources */,
 				54728AE7214251FB007668E8 /* ConstraintConstantTarget.swift in Sources */,
+				547E881F2144B5B600E5FA71 /* TBQRInputVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +791,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = AF8F677DE2;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ToolBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -747,6 +816,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = AF8F677DE2;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = ToolBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -49,15 +49,27 @@
     CGAffineTransform scale=CGAffineTransformMakeScale(10, 10);
     outputImage=[outputImage imageByApplyingTransform:scale];
     //二维码清晰化处理
-    return [self clearnessImage:outputImage qrSize:qrSize];
+    return [self clearnessCIimage:outputImage qrSize:qrSize];
 }
 //二维码清晰化处理
-+ (UIImage *)clearnessImage:(CIImage *)image qrSize:(CGSize)qrSize{
++ (UIImage *)clearnessCIimage:(CIImage *)image qrSize:(CGSize)qrSize{
     //二维码清晰化处理
     CGFloat scaleX = qrSize.width / image.extent.size.width;
     CGFloat scaleY = qrSize.height / image.extent.size.height;
     CIImage *newImage= [image imageByApplyingTransform:CGAffineTransformMakeScale(scaleX, scaleY)];
     return  [UIImage imageWithCIImage:newImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+}
++ (UIImage *)clearnessUIimage:(UIImage *)image qrSize:(CGSize)qrSize{
+    UIGraphicsBeginImageContextWithOptions(qrSize, NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, qrSize.width, qrSize.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+    //二维码清晰化处理
+//    CGFloat scaleX = qrSize.width / image.extent.size.width;
+//    CGFloat scaleY = qrSize.height / image.extent.size.height;
+//    CIImage *newImage= [image imageByApplyingTransform:CGAffineTransformMakeScale(scaleX, scaleY)];
+//    return  [UIImage imageWithCIImage:newImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
 }
 //添加logo
 + (UIImage *)insertLogoInQrCodeImage:(UIImage *)qrCodeImage logoImage:(UIImage *)logoImage {

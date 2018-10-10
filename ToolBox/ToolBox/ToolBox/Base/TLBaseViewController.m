@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = DevGetColorFromHex(0xf7f7f7);
+    self.view.backgroundColor = DevGetColorFromHex(0xffffff);
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self dyBasicData];
     [self dyBasicView];
